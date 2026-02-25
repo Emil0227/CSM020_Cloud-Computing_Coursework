@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 
+const postsRoutes = require('./routes/posts.routes');
+app.use('/posts', postsRoutes);
+
 const app = express();
 
 app.use(cors());
