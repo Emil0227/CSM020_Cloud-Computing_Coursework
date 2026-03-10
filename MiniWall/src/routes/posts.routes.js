@@ -1,33 +1,59 @@
 const express = require('express');
-const { body, validationResult } = require('express-validator');
-const authRequired = require('../middleware/auth');
+const { body, param, validationResult } = require('express-validator');
+
+const requireAuth = require('../middleware/requireAuth');
+const posts = require('../controllers/posts.controller');
 
 const router = express.Router();
 
-// GET /posts (protected)
-router.get('/', authRequired, async (req, res) => {
-  res.json({ message: 'You are authorised', user: req.user, posts: [] });
-});
+function handleValidation(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  next();
+}
 
-// POST /posts (protected + validation)
+// Create post
 router.post(
   '/',
-  authRequired,
+  requireAuth,
   [
-    body('title').isLength({ min: 1, max: 80 }).withMessage('Title 1-80 chars'),
-    body('description').isLength({ min: 1, max: 1000 }).withMessage('Description 1-1000 chars'),
+    body('title').isString().trim().isLength({ min: 1, max: 80 }),
+    body('description').isString().trim().isLength({ min: 1, max: 1000 }),
+    handleValidation,
   ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  posts.createPost
+);
 
-    // Phase C: save to MongoDB with owner=req.user.id
-    res.status(201).json({
-      message: 'Post accepted (DB save will be implemented in Phase C)',
-      owner: req.user.id,
-      data: req.body,
-    });
-  }
+// Read all posts(sorted by likesCount desc, createdAt desc)
+router.get('/', requireAuth, posts.listPosts);
+
+// Read one post
+router.get(
+  '/:postId',
+  requireAuth,
+  [param('postId').isMongoId(), handleValidation],
+  posts.getPost
+);
+
+// Update post
+router.put(
+  '/:postId',
+  requireAuth,
+  [
+    param('postId').isMongoId(),
+    body('title').optional().isString().trim().isLength({ min: 1, max: 80 }),
+    body('description').optional().isString().trim().isLength({ min: 1, max: 1000 }),
+    handleValidation,
+  ],
+  posts.updatePost
+);
+
+// Delete post
+router.delete(
+  '/:postId',
+  requireAuth,
+  [param('postId').isMongoId(), handleValidation],
+  posts.deletePost
 );
 
 module.exports = router;

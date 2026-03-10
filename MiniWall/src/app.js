@@ -11,7 +11,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-
 app.use('/', healthRoutes);
 app.use('/posts', postsRoutes);
 app.use('/users', usersRoutes);
