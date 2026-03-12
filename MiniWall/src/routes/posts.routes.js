@@ -5,12 +5,7 @@ const requireAuth = require('../middleware/requireAuth');
 const posts = require('../controllers/posts.controller');
 
 const router = express.Router();
-
-function handleValidation(req, res, next) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-  next();
-}
+const validate = require('../middleware/validate');
 
 // Create post
 router.post(
@@ -19,7 +14,7 @@ router.post(
   [
     body('title').isString().trim().isLength({ min: 1, max: 80 }),
     body('description').isString().trim().isLength({ min: 1, max: 1000 }),
-    handleValidation,
+    validate,
   ],
   posts.createPost
 );
@@ -31,7 +26,7 @@ router.get('/', requireAuth, posts.listPosts);
 router.get(
   '/:postId',
   requireAuth,
-  [param('postId').isMongoId(), handleValidation],
+  [param('postId').isMongoId(), validate],
   posts.getPost
 );
 
@@ -43,7 +38,7 @@ router.put(
     param('postId').isMongoId(),
     body('title').optional().isString().trim().isLength({ min: 1, max: 80 }),
     body('description').optional().isString().trim().isLength({ min: 1, max: 1000 }),
-    handleValidation,
+    validate,
   ],
   posts.updatePost
 );
@@ -52,7 +47,7 @@ router.put(
 router.delete(
   '/:postId',
   requireAuth,
-  [param('postId').isMongoId(), handleValidation],
+  [param('postId').isMongoId(), validate],
   posts.deletePost
 );
 
