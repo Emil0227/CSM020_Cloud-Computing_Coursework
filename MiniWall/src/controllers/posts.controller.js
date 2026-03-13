@@ -31,7 +31,7 @@ exports.updatePost = async (req, res) => {
   const post = await Post.findById(req.params.postId);
   if (!post) return res.status(404).json({ message: 'Post not found' });
 
-  // Only owner can update (good improvise)
+  // Only owner can update
   if (post.owner.toString() !== req.user.id) {
     return res.status(403).json({ message: 'Only the owner can update this post' });
   }
