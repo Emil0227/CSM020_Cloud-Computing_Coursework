@@ -1,29 +1,31 @@
+// import core libraries
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+// import routes
 const healthRoutes = require('./routes/health.routes');
-const postsRoutes = require('./routes/posts.routes');
 const usersRoutes = require('./routes/users.routes');
+const postsRoutes = require('./routes/posts.routes');
 const commentsRoutes = require('./routes/comments.routes');
 const likesRoutes = require('./routes/likes.routes');
 
-console.log('healthRoutes:', typeof healthRoutes, healthRoutes);
-console.log('postsRoutes:', typeof postsRoutes, postsRoutes);
-console.log('usersRoutes:', typeof usersRoutes, usersRoutes);
-console.log('commentsRoutes:', typeof commentsRoutes, commentsRoutes);
-console.log('likesRoutes:', typeof likesRoutes, likesRoutes);
-
+// create app
 const app = express();
 
+// global middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// routes
 app.use('/', healthRoutes);
-app.use('/posts', postsRoutes);
 app.use('/users', usersRoutes);
+app.use('/posts', postsRoutes);
+
+// nested resource routes
 app.use('/', commentsRoutes);
 app.use('/', likesRoutes);
 
+// export app
 module.exports = app;
