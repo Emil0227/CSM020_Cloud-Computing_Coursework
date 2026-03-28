@@ -1,13 +1,17 @@
+// import required libraries for routing, security, and validation
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 
+// import User model to interact with MongoDB
 const User = require('../models/User');
 
+// create a router instance to define user-related endpoints
 const router = express.Router();
 
-// helpers
+// helper function to generate JWT token for authenticated users
+// the token includes minimal user information (id and email) and has an expiry time
 function signToken(user) {
   const secret = process.env.JWT_SECRET;
   const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
@@ -20,6 +24,7 @@ function signToken(user) {
 }
 
 // POST /users/register
+// this endpoint handles user registration
 router.post(
   '/register',
   [
@@ -52,6 +57,7 @@ router.post(
 );
 
 // POST /users/login
+// this endpoint authenticates users and issues a JWT token
 router.post(
   '/login',
   [
@@ -80,4 +86,5 @@ router.post(
   }
 );
 
+// export router to be used in the main application
 module.exports = router;
