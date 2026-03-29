@@ -11,7 +11,7 @@ const validate = require('../middleware/validate');
 const router = express.Router();
 
 // POST /posts
-// create post
+// create a post
 // require authentication and input validation
 router.post(
   '/',
@@ -40,7 +40,7 @@ router.get(
 );
 
 // PUT /posts/:postId
-// update post
+// update a post
 // require authentication and input validation
 router.put(
   '/:postId',
@@ -55,7 +55,7 @@ router.put(
 );
 
 // DELETE /posts/:postId
-// delete post
+// delete a post
 // require authentication and postId validation
 router.delete(
   '/:postId',
