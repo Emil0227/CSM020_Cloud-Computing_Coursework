@@ -1,5 +1,7 @@
+// import Mongoose to define schema and interact with MongoDB
 const mongoose = require('mongoose');
 
+// define the schema for Post collection
 const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true, maxlength: 80 },
@@ -12,4 +14,5 @@ const postSchema = new mongoose.Schema(
   { timestamps: true } // createdAt, updatedAt (timestamp requirement)
 );
 
+// export the model for use in controllers and services
 module.exports = mongoose.model('Post', postSchema);
