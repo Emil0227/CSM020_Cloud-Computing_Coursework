@@ -26,7 +26,7 @@ router.post(
 );
 
 // GET /posts/:postId/comments
-// get comments for a post
+// read comments for a post
 // require authentication and postId validation
 router.get(
   '/posts/:postId/comments',
@@ -51,10 +51,9 @@ router.put(
   comments.updateComment
 );
 
-/**
- * Delete a comment
- * DELETE /comments/:commentId
- */
+// DELETE /comments/:commentId
+// delete a comment
+// require authentication and commentId validation
 router.delete(
   '/comments/:commentId',
   requireAuth,
@@ -63,4 +62,5 @@ router.delete(
   comments.deleteComment
 );
 
+// export router to be used in the main application
 module.exports = router;
