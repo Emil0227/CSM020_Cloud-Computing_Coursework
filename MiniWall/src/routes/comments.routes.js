@@ -1,21 +1,18 @@
+// import Express and validation utilities
 const express = require('express');
 const { body, param } = require('express-validator');
 
+// import middleware and controller modules
 const requireAuth = require('../middleware/auth');
 const comments = require('../controllers/comments.controller');
 const validate = require('../middleware/validate');
 
+// create router instance for comment-related endpoints
 const router = express.Router();
 
-/*
-  Comment Routes
-  All routes require authentication.
-*/
-
-/**
- * Create a comment on a post
- * POST /posts/:postId/comments
- */
+// POST /posts/:postId/comments
+// create a comment on a post
+// require authentication, postId validation, and input validation
 router.post(
   '/posts/:postId/comments',
   requireAuth,
@@ -28,10 +25,9 @@ router.post(
   comments.addComment
 );
 
-/**
- * Get comments for a post
- * GET /posts/:postId/comments
- */
+// GET /posts/:postId/comments
+// get comments for a post
+// require authentication and postId validation
 router.get(
   '/posts/:postId/comments',
   requireAuth,
@@ -40,10 +36,9 @@ router.get(
   comments.listComments
 );
 
-/**
- * Update a comment
- * PUT /comments/:commentId
- */
+// PUT /comments/:commentId
+// update a comment
+// require authentication, commentId validation, and input validation
 router.put(
   '/comments/:commentId',
   requireAuth,

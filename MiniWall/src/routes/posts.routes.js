@@ -64,5 +64,5 @@ router.delete(
   posts.deletePost
 );
 
-// export router to be mounted in main application
+// export router to be used in the main application
 module.exports = router;
