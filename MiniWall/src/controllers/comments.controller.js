@@ -1,23 +1,25 @@
+// import Comment and Post models to interact with MongoDB collections
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 
-/**
- * Add a comment to a post
- * Rule: post owner cannot comment on their own post
- */
+// add a comment to a post
+// require authenticated user (owner is taken from req.user set by auth middleware)
 exports.addComment = async (req, res) => {
   const { text } = req.body;
   const { postId } = req.params;
 
+  // check if the target post exists before creating a comment
   const post = await Post.findById(postId);
   if (!post) {
     return res.status(404).json({ message: 'Post not found' });
   }
-
+  
+  // prevent post owner from commenting on their own post
   if (post.owner.toString() === req.user.id) {
     return res.status(403).json({ message: 'Post owner cannot comment on own post' });
   }
 
+  // create and store the comment, linking it to both post and user
   const comment = await Comment.create({
     post: postId,
     owner: req.user.id,
@@ -27,9 +29,7 @@ exports.addComment = async (req, res) => {
   return res.status(201).json(comment);
 };
 
-/**
- * Get all comments for a post
- */
+// get all comments for a post
 exports.listComments = async (req, res) => {
   const { postId } = req.params;
 
@@ -40,10 +40,7 @@ exports.listComments = async (req, res) => {
   return res.json(comments);
 };
 
-/**
- * Update a comment
- * Rule: only the comment owner can update it
- */
+// update a comment
 exports.updateComment = async (req, res) => {
   const { commentId } = req.params;
   const { text } = req.body;
@@ -53,6 +50,7 @@ exports.updateComment = async (req, res) => {
     return res.status(404).json({ message: 'Comment not found' });
   }
 
+  // only owner can update
   if (comment.owner.toString() !== req.user.id) {
     return res.status(403).json({ message: 'Only the comment owner can update' });
   }
@@ -63,10 +61,7 @@ exports.updateComment = async (req, res) => {
   return res.json(comment);
 };
 
-/**
- * Delete a comment
- * Rule: only the comment owner can delete it
- */
+// delete a comment
 exports.deleteComment = async (req, res) => {
   const { commentId } = req.params;
 
@@ -75,6 +70,7 @@ exports.deleteComment = async (req, res) => {
     return res.status(404).json({ message: 'Comment not found' });
   }
 
+  // only owner can delete
   if (comment.owner.toString() !== req.user.id) {
     return res.status(403).json({ message: 'Only the comment owner can delete' });
   }
