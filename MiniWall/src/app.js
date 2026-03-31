@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 2 tutorial
+// Custom implementation for MiniWall project
+
 // import core libraries
 const express = require('express');
 const cors = require('cors');
@@ -9,6 +12,7 @@ const usersRoutes = require('./routes/users.routes');
 const postsRoutes = require('./routes/posts.routes');
 const commentsRoutes = require('./routes/comments.routes');
 const likesRoutes = require('./routes/likes.routes');
+const searchRoutes = require('./routes/search.routes');
 
 // create app
 const app = express();
@@ -22,6 +26,7 @@ app.use(morgan('dev'));
 app.use('/', healthRoutes);
 app.use('/users', usersRoutes);
 app.use('/posts', postsRoutes);
+app.use('/posts', searchRoutes);
 
 // nested resource routes
 app.use('/', commentsRoutes);
