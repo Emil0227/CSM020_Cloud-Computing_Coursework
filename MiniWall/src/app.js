@@ -25,8 +25,8 @@ app.use(morgan('dev'));
 // routes
 app.use('/', healthRoutes);
 app.use('/users', usersRoutes);
-app.use('/posts', postsRoutes);
 app.use('/posts', searchRoutes);
+app.use('/posts', postsRoutes);
 
 // nested resource routes
 app.use('/', commentsRoutes);

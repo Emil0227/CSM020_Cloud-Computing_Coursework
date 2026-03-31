@@ -1,6 +1,6 @@
 // import Express and validation utilities
 const express = require('express');
-const { body, param, validationResult } = require('express-validator');
+const { query, validationResult } = require('express-validator');
 
 // import middleware and controller modules
 const requireAuth = require('../middleware/auth');
@@ -11,7 +11,8 @@ const validate = require('../middleware/validate');
 const router = express.Router();
 
 // GET /search
-// search posts 
+// search posts
+// require authentication and input validation
 router.get(
   '/search',
   requireAuth,

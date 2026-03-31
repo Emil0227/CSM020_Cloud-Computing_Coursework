@@ -19,15 +19,13 @@ const postSchema = new mongoose.Schema(
 
 // pre-save hook to automatically generate titleKeywords
 // ensure keywords are updated whenever a post is created or its title is modified
-postSchema.pre('save', function (next) {
+postSchema.pre('save', function () {
   if (this.isModified('title')) {
     this.titleKeywords = this.title
       .toLowerCase()
       .split(/\s+/)
       .filter(Boolean);
   }
-
-  next();
 });
 
 // additional indexes for search efficiency
