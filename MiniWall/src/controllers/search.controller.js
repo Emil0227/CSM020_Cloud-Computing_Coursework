@@ -22,13 +22,11 @@ exports.searchPosts = async (req, res) => {
     query.createdAt = {};
 
     if (startDate) {
-      query.createdAt.$gte = new Date(startDate);
+      query.createdAt.$gte = new Date(`${startDate}T00:00:00.000Z`);
     }
 
     if (endDate) {
-      const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999);
-      query.createdAt.$lte = end;
+      query.createdAt.$lte = new Date(`${endDate}T23:59:59.999Z`);
     }
   }
 
