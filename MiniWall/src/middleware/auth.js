@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 4 tutorial
+// Custom implementation for MiniWall project
+
 // import jsonwebtoken library to verify JWT tokens
 const jwt = require('jsonwebtoken');
 

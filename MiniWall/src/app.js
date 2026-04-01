@@ -1,4 +1,4 @@
-// Based on CSM020 Lab 2 tutorial
+// Based on CSM020 Lab 3-4 tutorial
 // Custom implementation for MiniWall project
 
 // import core libraries

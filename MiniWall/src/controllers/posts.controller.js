@@ -2,7 +2,7 @@
 const Post = require('../models/Post');
 
 // create a new post
-// requires authenticated user (owner is taken from req.user set by auth middleware)
+// require authenticated user (owner is taken from req.user set by auth middleware)
 exports.createPost = async (req, res) => {
   const { title, description } = req.body;
 
@@ -16,7 +16,7 @@ exports.createPost = async (req, res) => {
 };
 
 // retrieve all posts
-// applies required sorting: first by likes (descending), then by creation time (latest first)
+// apply required sorting: first by likes (descending), then by creation time (latest first)
 exports.listPosts = async (req, res) => {
   const posts = await Post.find()
     .populate('owner', 'email displayName')

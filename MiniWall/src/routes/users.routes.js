@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 3-4 tutorial
+// Custom implementation for MiniWall project
+
 // import required libraries for routing, security, and validation
 const express = require('express');
 const bcrypt = require('bcryptjs');

@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 3-4 tutorial
+// Custom implementation for MiniWall project
+
 // import Express and validation utilities
 const express = require('express');
 const { body, param, validationResult } = require('express-validator');

@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 3 tutorial
+// Custom implementation for MiniWall project
+
 // import Mongoose to define schema and interact with MongoDB
 const mongoose = require('mongoose');
 

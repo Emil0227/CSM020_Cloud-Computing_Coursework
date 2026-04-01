@@ -1,3 +1,6 @@
+// Based on CSM020 Lab 4 tutorial
+// Custom implementation for MiniWall project
+
 // import Mongoose to define schema and interact with MongoDB
 const mongoose = require('mongoose');
 
@@ -11,5 +14,5 @@ const userSchema = new mongoose.Schema(
   { timestamps: true } // automatically add createdAt and updatedAt timestamps
 );
 
-// export the model to be used in controllers and services
+// export the model for use in controllers and services
 module.exports = mongoose.model('User', userSchema);

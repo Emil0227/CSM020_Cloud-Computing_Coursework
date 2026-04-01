@@ -26,6 +26,7 @@ exports.searchPosts = async (req, res) => {
     }
 
     if (endDate) {
+      
       query.createdAt.$lte = new Date(`${endDate}T23:59:59.999Z`);
     }
   }
